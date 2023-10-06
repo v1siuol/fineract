@@ -30,6 +30,8 @@ public final class SearchParameters {
     private final String firstname;
     private final String lastname;
     private final String status;
+    private final String startDate;
+    private final String endDate;
     private final Integer offset;
     private final Integer limit;
     private final String orderBy;
@@ -181,8 +183,8 @@ public final class SearchParameters {
         return new SearchParameters(provisioningEntryId, officeId, productId, categoryId, offset, limit);
     }
 
-    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final Integer offset, final Integer limit,
-            final String orderBy, final String sortOrder) {
+    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final String startDate, final String endDate,
+            final Integer offset, final Integer limit, final String orderBy, final String sortOrder) {
 
         final Integer maxLimitAllowed = getCheckedLimit(limit);
         final Long staffId = null;
@@ -192,8 +194,8 @@ public final class SearchParameters {
         final Boolean orphansOnly = false;
         final boolean isSelfUser = false;
 
-        return new SearchParameters(sqlSearch, null, externalId, null, null, null, null, offset, maxLimitAllowed, orderBy, sortOrder,
-                staffId, accountNo, loanId, savingsId, orphansOnly, isSelfUser);
+        return new SearchParameters(sqlSearch, null, externalId, null, null, null, null, startDate, endDate, offset, maxLimitAllowed,
+                orderBy, sortOrder, staffId, accountNo, loanId, savingsId, orphansOnly, isSelfUser);
     }
 
     public static SearchParameters forAccountTransfer(final String sqlSearch, final String externalId, final Integer offset,
@@ -254,6 +256,8 @@ public final class SearchParameters {
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.startDate = null;
+        this.endDate = null;
         this.offset = offset;
         this.limit = limit;
         this.orderBy = orderBy;
@@ -283,6 +287,8 @@ public final class SearchParameters {
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.startDate = null;
+        this.endDate = null;
         this.offset = offset;
         this.limit = limit;
         this.orderBy = orderBy;
@@ -312,6 +318,8 @@ public final class SearchParameters {
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.startDate = null;
+        this.endDate = null;
         this.offset = offset;
         this.limit = limit;
         this.orderBy = orderBy;
@@ -337,6 +345,8 @@ public final class SearchParameters {
         this.hierarchy = null;
         this.firstname = null;
         this.lastname = null;
+        this.startDate = null;
+        this.endDate = null;
         this.orderBy = null;
         this.sortOrder = null;
         this.staffId = null;
@@ -367,6 +377,8 @@ public final class SearchParameters {
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.startDate = null;
+        this.endDate = null;
         this.offset = offset;
         this.limit = limit;
         this.orderBy = orderBy;
@@ -384,6 +396,37 @@ public final class SearchParameters {
         this.status = null;
 
     }
+
+    private SearchParameters(final String sqlSearch, final Long officeId, final String externalId, final String name,
+            final String hierarchy, final String firstname, final String lastname, final String startDate, final String endDate, 
+            final Integer offset, final Integer limit, final String orderBy, final String sortOrder, final Long staffId, 
+            final String accountNo, final Long loanId, final Long savingsId, final Boolean orphansOnly, boolean isSelfUser) {
+        this.sqlSearch = sqlSearch;
+        this.officeId = officeId;
+        this.externalId = externalId;
+        this.name = name;
+        this.hierarchy = hierarchy;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.offset = offset;
+        this.limit = limit;
+        this.orderBy = orderBy;
+        this.sortOrder = sortOrder;
+        this.staffId = staffId;
+        this.accountNo = accountNo;
+        this.loanId = loanId;
+        this.savingsId = savingsId;
+        this.orphansOnly = orphansOnly;
+        this.currencyCode = null;
+        this.provisioningEntryId = null;
+        this.productId = null;
+        this.categoryId = null;
+        this.isSelfUser = isSelfUser;
+        this.status = null;
+
+    }    
 
     public boolean isOrderByRequested() {
         return StringUtils.isNotBlank(this.orderBy);
@@ -463,6 +506,14 @@ public final class SearchParameters {
 
     public String getStatus() {
         return this.status;
+    }
+
+    public String getStartDate() {
+        return this.startDate;
+    }
+
+    public String getEndDate() {
+        return this.endDate;
     }
 
     public Integer getOffset() {
